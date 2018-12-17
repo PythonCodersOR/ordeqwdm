@@ -11,7 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>odeqwdm</Name>
     <RootNamespace>odeqwdm</RootNamespace>
-    <InterpreterId>CondaEnv|CondaEnv|pyHSPF</InterpreterId>
+    <InterpreterId>CondaEnv|CondaEnv|pyHSPF_chk</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,7 +25,8 @@
     <Compile Include="odeqwdm.py" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="CondaEnv|CondaEnv|pyHSPF" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|junk" />
+    <InterpreterReference Include="CondaEnv|CondaEnv|pyHSPF_chk" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

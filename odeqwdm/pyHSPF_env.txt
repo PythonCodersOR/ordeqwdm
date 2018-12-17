@@ -81,3 +81,4 @@ https://conda.anaconda.org/conda-forge/win-64/mkl_fft-1.0.10-py36_0.tar.bz2
 https://conda.anaconda.org/conda-forge/win-64/mkl_random-1.0.2-py36_0.tar.bz2
 https://repo.anaconda.com/pkgs/main/win-64/numpy-1.15.4-py36ha559c80_0.tar.bz2
 https://conda.anaconda.org/conda-forge/win-64/pandas-0.23.4-py36h830ac7b_1000.tar.bz2
+pip install pyHSPF
