@@ -1,4 +1,5 @@
 # FUNCTION TO ADD THE TIMESERIES DATA TO THE WDM FILE
+
 def ts_to_wdmFile(wdmFile, pcpData, petData, flwData):
 
     wdm = WDMUtil(verbose = True, messagepath = 'hspfmsg.wdm')
@@ -27,7 +28,7 @@ def ts_to_wdmFile(wdmFile, pcpData, petData, flwData):
                                        int(start_date[0:2]),
                                        int(start_date[3:5]))
 
-        prec_add = [float(x) for x in list(pcpData.iloc[:,1])]
+        prec_add = [float(x) for x in list(pcpData.iloc[:, basin])]
 
         wdm.add_data(wdmFile, x + 100, prec_add, date_start)
 
@@ -42,7 +43,7 @@ def ts_to_wdmFile(wdmFile, pcpData, petData, flwData):
                                        int(start_date[0:2]),
                                        int(start_date[3:5]))
 
-        pet_add = [float(x) for x in list(petData.iloc[:,1])]
+        pet_add = [float(x) for x in list(petData.iloc[:, basin])]
 
         wdm.add_data(wdmFile, x + 200, pet_add, date_start)
 
@@ -59,7 +60,7 @@ def ts_to_wdmFile(wdmFile, pcpData, petData, flwData):
                                        int(start_date[0:2]),
                                        int(start_date[3:5]))
 
-    flw_add = [float(x) for x in list(flwData.iloc[:,1])]
+    flw_add = [float(x) for x in list(flwData.iloc[:, 1])]
 
     wdm.add_data(wdmFile, 301, flw_add, date_start)
         

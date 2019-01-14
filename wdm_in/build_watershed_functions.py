@@ -3,7 +3,7 @@
 # AND ADD TIME SERIES DATA TO THE WDM FILE
 
 # FUNCTION TO CREATE SUBBASINS AND ADD REACH AND BASIN DATA (EXCEPT LANDUSE)  #
-def create_subbasins(basinRecords, reachRecords, year, lc_codes, hru_df):
+def create_subbasins(basinRecords, reachRecords, year, lc_codes, hru_df, fTables):
 
     subbasins = {}  # Create the basins for populating with characteristics
 
@@ -13,11 +13,11 @@ def create_subbasins(basinRecords, reachRecords, year, lc_codes, hru_df):
         # Read basin data
         number = str(basinRecords[basin][3]) # The HSPF Basin Number
         
-        planeslope = basinRecords[basin][4] / 100  # -
+        planeslope = basinRecords[basin][4] / 100  # length / length
         
-        elev = (reachRecords[basin][7] + reachRecords[basin][6])/2
+        elev = (reachRecords[basin][7] + reachRecords[basin][6])/2 # (max z + min z) / 2
 
-        centroid = [basinRecords[basin][7], basinRecords[basin][8]]
+        centroid = [basinRecords[basin][7], basinRecords[basin][8]] # [lat, lon]
 
         length = 200 # Overland flow distance in metres (generic value ATM)
 
@@ -60,3 +60,49 @@ def create_flownetwork(basinRecords):
             del flow_network[str(basinRecords[basin][3])]
 
     return (flow_network)
+
+# CREATE FTABLES FROM CSV
+def read_ftables(fTabFil):
+
+    with open(fTabFil) as ftableFile:
+
+        readTables = csv.reader(ftableFile, delimiter = ',')
+
+        fTab_df = []
+
+        for fTabRow in readTables:
+
+            fTab_df.append(fTabRow)
+
+    # Convert the fTable lists to a dataframe and rename columns
+    fTab_df = pd.DataFrame.from_records(fTab_df)
+
+    tabNames = pd.unique(fTab_df[0])
+
+    # Convert from string to numeric
+    for fTabCol in range(1, len(fTab_df.columns)):
+
+        fTab_df.iloc[:, fTabCol] = [float(x) for x in
+                                    list(fTab_df.iloc[:, fTabCol])]
+
+    fTables = [] # Subset the ftable dataframe to individual basin lists
+
+    c = 1
+
+    for n in tabNames:
+
+        int_df = fTab_df[fTab_df[0] == n]
+
+        tempList = []
+
+        for i in range(0, len(int_df)):
+
+            row = list(int_df.iloc[i, 1 : 5])
+
+            tempList.append(row)
+
+        fTables.append(tempList)
+
+        c += 1
+
+    return(fTables)
